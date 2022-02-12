@@ -1,8 +1,6 @@
-
-        var div_data_container={};
+var div_data_container={};
         function make_table_pagination(ajax_url,ajax_data,table_div_id,data_per_page,search_enable_or_desiable,input_value,type,reload) 
         {
-
             var buffer_size= buffer_size || 40;
             var current_page= current_page || 1;
             var data_per_page= data_per_page || 10;
@@ -14,19 +12,14 @@
             var reload=reload || '';
             var search_enable_or_desiable=search_enable_or_desiable || false;
             var date_filter_enable_desable=date_filter_enable_desable || false;
-
             var ajax_data_sco=ajax_data;
-
             var data_of_div={};
             data_of_div['ajax_url']=ajax_url;
             data_of_div['ajax_data']=ajax_data_sco;
             data_of_div['buffer_size']=buffer_size;
             data_of_div['data_per_page']=data_per_page;
             data_of_div['table_div_id']=table_div_id;
-
-
             div_data_container[table_div_id]=data_of_div;
-
             var manage_buffer={
                 total_data:{},
                 max_page1:0,
@@ -38,7 +31,6 @@
                 table_heading_names: new Array(),
                 table_coulmn_names:new Array(),
                 buffer_size_from_to:new Array(),
-
         construct:function(fun)
         {
             this.html_fun=fun;
@@ -75,13 +67,10 @@
                     flag1++;
                     if(i==current_page)
                     {
-
                         $("#loading").show();
                         
                     }
-
                 }   
-
             }
             return page_not_present;  
         },
@@ -98,7 +87,6 @@
             this.buffer_size_from_to[flag]=""+from+""+","+""+to+"";
             for (var i = 1; i <page_not_present.length; i++) 
             {   
-
                 if((to+1)==page_not_present[i])
                 {   
                     to=page_not_present[i];
@@ -133,30 +121,45 @@
 
             $.ajax({ 
                         type:"POST",
-                        async: "false",
-                        url:ajax_url,
-                        data:ajax_data,
-                        dataType: 'json',
-                        beforeSend()
-                        {
-                           
-                        },
-                        success(data)
-                        {    
-                            
-                           manage_buffer.manage_buffer_AddData(data);
-                           $("#loading").hide();
+                async: "true",
+                url:ajax_url,
+                data:ajax_data,
+                dataType: 'json',
+                beforeSend()
+                {
+                   console.log('ajax_data: '+JSON.stringify(ajax_data));
+                },
+                success(data)
+                {    
 
-                        },
-                        error: function() 
-                        {
-                            
-                            console.log("Error occured!");
-                        }
-                    }); 
+                   manage_buffer.manage_buffer_AddData(data);
+                   $("#loading").hide();
+
+                },
+                error: function(error) 
+                {
+
+                    console.log("Error occured! "+JSON.stringify(error));
+                }
+            }); 
         },
         manage_buffer_AddData:function(response)
         {   
+
+    
+          
+            
+    
+
+          
+          
+            
+    
+
+          
+    
+    @@ -221,8 +221,8 @@
+  
             this.data_not_fount='';
             this.date_not_found='';
             this.table_heading_names=response['table_heading_name'];
@@ -176,7 +179,6 @@
                   if(current_page==1)
                     {
                         this.total_length=response['total_length'];
-
                     }
                     var new_total_length=response['total_length'];; 
         
@@ -215,29 +217,40 @@
         var manage_html={
         make_new_pagination:function(max_page)
         {   
-
             var max_page=max_page;
             var pagi_id=manage_html.make_new_table(current_page);
 
             $(document).ready(function()
             { 
-                $("head").append('<script type="text/javascript" src="/./Mock_test_1/pagination1.0/simplePagination.js-master/jquery.simplePagination.js"></script>');
-                $("head").append('<link rel="stylesheet" href="/./Mock_test_1/pagination1.0/simplePagination.js-master/simplePagination.css">');
+                $("head").append('<script type="text/javascript" src="pagination1.0/simplePagination.js-master/jquery.simplePagination.js"></script>');
+                $("head").append('<link rel="stylesheet" href="pagination1.0/simplePagination.js-master/simplePagination.css">');
 
                 $("#"+pagi_id).pagination(
                 {      
+
+    
+          
+            
+    
+
+          
+          
+            
+    
+
+          
+    
+    @@ -475,4 +475,4 @@
+  
                     pages:max_page,
                     cssStyle: 'light-theme',
                     currentPage: current_page,
                     onPageClick: function (page, event) 
                     {
-
                         
                         current_page=page;
-
                         manage_buffer.construct(manage_html.make_new_pagination);
                         var buffer_range=manage_buffer.manage_buffer_findPage(current_page);
-
                         var page_not_present=manage_buffer.manage_buffer_WhetherBufferExists(buffer_range)
                         var get_page_range=manage_buffer.manage_buffer_GetPageRange(page_not_present);
                         
@@ -248,7 +261,6 @@
                             manage_buffer.manage_buffer_SendAjax(ajax_data);
                         }
                         pagination_on_click='pagi';
-
                         manage_html.make_new_table(current_page);    
                     }
                 });
@@ -257,13 +269,9 @@
         },
         make_new_table:function(current_page_new)
         {    
-
-
             var tbody_ids=new Array('myTable','myTable1','myTable2','myTable3','myTable4','myTable5');
-
             var current_page_data=new Array();
             var current_page_data=manage_buffer.total_data[current_page_new];
-
             var tbody_id=$('tbody');
             var tb_id_name='';
             var pagination_id_name='';
@@ -293,8 +301,6 @@
                 
                if(type!='search' ||pagination_on_click!='pagi' ||reload=='reload') 
                {
-
-
                 $.each(tbody_ids ,function (index, value_arr)
                 {   
                     var flag=0;
@@ -305,11 +311,9 @@
                         {
                            
                            flag=1;
-
                         }
                         
                     });
-
                     if(flag==0)
                     {
                         tb_id_name=value_arr;
@@ -319,7 +323,6 @@
                 });
                 }
             }
-
             tth='';
             $.each(manage_buffer.table_heading_names, function(index, value)
             {
@@ -346,7 +349,6 @@
                 $.each(manage_buffer.table_coulmn_names, function(index,valueOfColumn)
                 {                       
                     
-
                     if(valueOfColumn=='id')
                     {
                         value_of_id=value[valueOfColumn];
@@ -355,8 +357,6 @@
                     {
                         ttd+='<td>'+value[valueOfColumn]+'</td>'; 
                     }
-
-
                     
                 });
                 
@@ -375,13 +375,10 @@
             {
                 $(""+table_div_id+" #date_filter").remove();
             }
-
             $('#'+tb_id_name).append(append_data);
-
             
             if(manage_buffer.data_not_fount)
             {
-
                 $(""+table_div_id+" #data_not_found").append('<div id="data_not" align="center"><h3>Data Not Found</h3> </div>');
             }
             if(manage_buffer.date_not_found)
@@ -390,23 +387,18 @@
             }
             manage_buffer.search_div_counter=1;
             return pagination_id_name;
-
         }};
-
             manage_buffer.construct(manage_html.make_new_pagination);
             var buffer_range=manage_buffer.manage_buffer_findPage(current_page);
-
             var page_not_present=manage_buffer.manage_buffer_WhetherBufferExists(buffer_range,current_page)
             var get_page_range=manage_buffer.manage_buffer_GetPageRange(page_not_present);
  
             var ajax_data = ajax_data || {};
-
                 ajax_data["request"]=type;
                 ajax_data["buffer_data"]=JSON.stringify(get_page_range);
                 ajax_data["data_per_page"]=data_per_page;
                 ajax_data["input_value"]=input_value;
              
-
             if(get_page_range!='undefined')
             {
                 
@@ -415,27 +407,21 @@
         }
         $(document).on("keyup","#txt-search", function() 
         {   
-
         
             var div_id=$(this).attr('selectd_div');
             var div_data=div_data_container[div_id];
            
             if (this.ajax_timeout !="")
             {
-
                 clearTimeout(this.ajax_timeout);
             }
             var value = $(this).val();
-
             if (value =="") 
             {   
-
-
                     delete div_data['ajax_data'].request;
                     delete div_data['ajax_data'].buffer_data;
                     delete div_data['ajax_data'].data_per_page;
                     delete div_data['ajax_data'].input_value;
-
                     var type='data';
                     var ajax_url=div_data['ajax_url'];
                     var ajax_data=div_data['ajax_data'];
@@ -465,13 +451,11 @@
                     var data_per_page=div_data['data_per_page'];
                     var search_enable_or_desiable=true;
                     make_table_pagination(ajax_url,ajax_data,table_div_id,data_per_page,search_enable_or_desiable,input_value,type);
-
                     
                 }, 1500);
             }
                
         });
-
 
 
 
